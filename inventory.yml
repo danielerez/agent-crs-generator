@@ -1,0 +1,16 @@
+all:
+  hosts:
+    bmh0:
+      ansible_host: 192.168.0.1
+      namespace: spoke
+      role: master
+      bmh_name: test_bmh0
+      infraenv_name: test_infraenv
+      clusterdeployment_name: test_clusterdeployemnt
+    bmh1:
+      ansible_host: 192.168.0.2
+      namespace: spoke
+      role: master
+      bmh_name: test_bmh1
+      infraenv_name: test_infraenv
+      clusterdeployment_name: test_clusterdeployemnt

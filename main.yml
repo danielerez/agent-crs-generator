@@ -1,0 +1,31 @@
+- name: Gather info from hosts
+  hosts: all
+  remote_user: core
+  become: true
+  tasks:
+    # Get values from hosts
+    - name: Get agent name
+      import_tasks: tasks/get-host-id.yml
+    - name: Get CPU architecture
+      import_tasks: tasks/get-cpu-arch.yml
+    - name: Get CPU virt-enabled
+      import_tasks: tasks/get-cpu-virt-enabled.yml
+    - name: Get host manufacturer
+      import_tasks: tasks/get-host-manufacturer.yml
+    - name: Get host product name
+      import_tasks: tasks/get-host-product-name.yml
+    - name: Get host is-virtual
+      import_tasks: tasks/get-host-is-virtual.yml
+
+    # Generate CRs
+    - name: Create directory for generated CRs
+      delegate_to: localhost
+      run_once: true
+      file:
+        name: generated
+        state: directory
+    - name: Generate agent CRs
+      delegate_to: localhost
+      template:
+        src: "agent.j2"
+        dest: "generated/agent_{{ agent_name }}.yaml"

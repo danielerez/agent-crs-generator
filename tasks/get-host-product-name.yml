@@ -1,0 +1,7 @@
+- name: Get host product name
+  shell:
+    cat /sys/class/dmi/id/product_name
+  register: output
+- name: Set var
+  set_fact:
+    host_product_name: "{{ output.stdout }}"

@@ -1,0 +1,7 @@
+- name: Get CPU architecture
+  shell:
+    lscpu -J | jq -r '.[] | map(select(.field=="Architecture:").data) | .[0]'
+  register: output
+- name: Set var
+  set_fact:
+    cpu_arch: "{{ output.stdout }}"

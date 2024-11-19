@@ -1,0 +1,18 @@
+- name: Get motherboard serial UUID
+  shell: |
+    serial=$(cat /sys/class/dmi/id/board_serial)
+    if [ -z "$serial" ]; then exit 0; fi
+    # Generate MD5 hash of the input string
+    # Then, format the MD5 hash into UUID format (8-4-4-4-12)
+    # See: https://github.com/openshift/assisted-installer-agent/blob/d59f034e36283c9cdcbc0def4a890163ebe7e949/src/scanners/machine_uuid_scanner.go#L68-L71
+    md5Str=$(echo -n "$serial" | md5sum | awk '{print $1}')
+    echo "${md5Str:0:8}-${md5Str:8:4}-${md5Str:12:4}-${md5Str:16:4}-${md5Str:20:12}"
+  register: board_uuid
+- name: Get system UUID
+  when: board_uuid is defined
+  shell:
+    cat /sys/class/dmi/id/product_uuid
+  register: system_uuid
+- name: Set var
+  set_fact:
+    agent_name: "{{ board_uuid is undefined | ternary(board_uuid.stdout, system_uuid.stdout) }}"

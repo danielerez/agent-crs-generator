@@ -1,0 +1,7 @@
+- name: Get host manufacturer
+  shell:
+    cat /sys/class/dmi/id/sys_vendor
+  register: output
+- name: Set var
+  set_fact:
+    host_manufacturer: "{{ output.stdout }}"

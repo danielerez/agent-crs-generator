@@ -1,0 +1,8 @@
+- name: Get host is-virtual
+  shell:
+    systemd-detect-virt --vm
+  ignore_errors: true
+  register: output
+- name: Set var
+  set_fact:
+    host_is_virtual: "\"{{ (output.stdout == 'kvm') | ternary('true', 'false') }}\""

@@ -1,0 +1,24 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: Agent
+metadata:
+  annotations:
+    agent.agent-install.openshift.io/state: installed
+    agent.agent-install.openshift.io/role: {{ role }}
+    inventory.agent-install.openshift.io/version: "0.1"
+  labels:
+    agent-install.openshift.io/bmh: {{ bmh_name }}
+    agent-install.openshift.io/clusterdeployment-namespace: {{ namespace }}
+    infraenvs.agent-install.openshift.io: {{ infraenv_name }}
+    inventory.agent-install.openshift.io/cpu-architecture: {{ cpu_arch }}
+    inventory.agent-install.openshift.io/host-manufacturer: {{ host_manufacturer }}
+    inventory.agent-install.openshift.io/host-productname: {{ host_product_name }}
+    inventory.agent-install.openshift.io/cpu-virtenabled: {{ cpu_virt_enabled }}
+    inventory.agent-install.openshift.io/host-isvirtual: {{ host_is_virtual }}
+  name: {{ agent_name }}
+  namespace: {{ namespace }}
+spec:
+  approved: true
+  clusterDeploymentName:
+    name: {{ clusterdeployment_name }}
+    namespace: {{ namespace }}
+  role: {{ role }}

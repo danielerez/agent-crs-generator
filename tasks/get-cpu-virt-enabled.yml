@@ -1,0 +1,7 @@
+- name: Get CPU virt-enabled
+  shell:
+    lscpu -J | jq '.[] | map(select(.field=="Flags:").data)'
+  register: output
+- name: Set var
+  set_fact:
+    cpu_virt_enabled: "\"{{ ('vmx' in output.stdout or 'svm' in output.stdout) | ternary('true', 'false') }}\""
