@@ -16,6 +16,8 @@
       import_tasks: tasks/get-host-product-name.yml
     - name: Get host is-virtual
       import_tasks: tasks/get-host-is-virtual.yml
+    - name: Get host inventory
+      import_tasks: tasks/get-host-inventory.yml
 
     # Generate CRs
     - name: Create directory for generated CRs

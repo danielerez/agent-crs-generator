@@ -4,4 +4,4 @@
   register: output
 - name: Set var
   set_fact:
-    host_manufacturer: "{{ output.stdout }}"
+    host_manufacturer: '{{ output.stdout | regex_replace("\s","") }}'
