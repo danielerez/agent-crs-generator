@@ -2,6 +2,7 @@ apiVersion: agent-install.openshift.io/v1beta1
 kind: Agent
 metadata:
   annotations:
+    agent.agent-install.openshift.io/inventory: {{ inventory }}
     agent.agent-install.openshift.io/state: installed
     agent.agent-install.openshift.io/role: {{ role }}
     inventory.agent-install.openshift.io/version: "0.1"

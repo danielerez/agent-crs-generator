@@ -1,0 +1,24 @@
+- name: Get host inventory
+  shell: |
+    # See: https://github.com/openshift/assisted-installer-agent/blob/efd0c67dd9e7817bcac119bc8397fec062859720/src/commands/actions/inventory_cmd.go#L46
+    podman run --privileged --pid=host --net=host --rm --quiet \
+      -v /var/log:/var/log \
+      -v /run/udev:/run/udev \
+      -v /dev/disk:/dev/disk \
+      -v /run/systemd/journal/socket:/run/systemd/journal/socket \
+      -v /var/log:/host/var/log:ro \
+      -v /proc/meminfo:/host/proc/meminfo:ro \
+      -v /sys/kernel/mm/hugepages:/host/sys/kernel/mm/hugepages:ro \
+      -v /proc/cpuinfo:/host/proc/cpuinfo:ro \
+      -v /sys/block:/host/sys/block:ro \
+      -v /sys/devices:/host/sys/devices:ro \
+      -v /sys/bus:/host/sys/bus:ro \
+      -v /sys/class:/host/sys/class:ro \
+      -v /run/udev:/host/run/udev:ro \
+      -v /dev/disk:/host/dev/disk:ro \
+    quay.io/edge-infrastructure/assisted-installer-agent:latest \
+    inventory
+  register: output
+- name: Set var
+  set_fact:
+    inventory: "{{ output.stdout | to_yaml }}"
