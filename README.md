@@ -27,7 +27,10 @@ $ ansible-playbook -i inventory.yml main.yml
 
 ### Apply CRs
 The Agent yaml files should be available under the `generated` folder.
-Note: apply the files on the ACM hub after upgrading to 2.12.
+
+Notes: 
+* Apply the files on the ACM hub after upgrading to 2.12.
+* Ensure the relevant resources are available for the associated cluster: ClusterDeployment, AgentClusterInstall, InfraEnv.
 
 
 
